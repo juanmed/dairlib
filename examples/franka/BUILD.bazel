@@ -33,6 +33,7 @@ cc_binary(
     data = [
         ":urdfs",
         "@drake_models//:franka_description",
+        ":params_files",
     ],
     deps = [
         ":parameters",
@@ -54,6 +55,7 @@ cc_binary(
     data = [
         ":urdfs",
         "@drake_models//:franka_description",
+        ":params_files",
     ],
     deps = [
         ":parameters",
@@ -78,6 +80,7 @@ cc_binary(
     data = [
         ":urdfs",
         "@drake_models//:franka_description",
+        ":params_files",
     ],
     deps = [
         ":parameters",
@@ -156,6 +159,7 @@ cc_binary(
     data = [
         ":urdfs",
         "@drake_models//:franka_description",
+        ":params_files",
     ],
     deps = [
         ":parameters",
@@ -272,9 +276,15 @@ cc_library(
         "parameters/franka_sim_scene_params.h",
     ],
     data = glob([
-        "*yaml",
+        "*.yaml",
     ]),
     deps = [
         "@drake//:drake_shared_library",
     ],
 )
+
+filegroup(
+    name = "params_files",
+    srcs = glob(["parameters/*.yaml", "parameters/**/*.yaml"]),
+)
+
