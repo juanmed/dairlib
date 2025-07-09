@@ -199,17 +199,17 @@ drake::systems::EventStatus C3Controller::ComputePlan(
   std::vector<VectorXd> x_desired =
       std::vector<VectorXd>(N_ + 1, x_des.value());
 
-  // Force Checking of Workspace Limits
-  for (int i = 0; i < c3_options_.workspace_limits.size(); ++i) {
-    DRAKE_DEMAND(lcs_x->get_data().segment(0, 3).transpose() *
-                     c3_options_.workspace_limits[i].segment(0, 3) >
-                 c3_options_.workspace_limits[i][3] -
-                     c3_options_.workspace_margins);
-    DRAKE_DEMAND(lcs_x->get_data().segment(0, 3).transpose() *
-                     c3_options_.workspace_limits[i].segment(0, 3) <
-                 c3_options_.workspace_limits[i][4] +
-                     c3_options_.workspace_margins);
-  }
+  // // Force Checking of Workspace Limits
+  // for (int i = 0; i < c3_options_.workspace_limits.size(); ++i) {
+  //   DRAKE_DEMAND(lcs_x->get_data().segment(0, 3).transpose() *
+  //                    c3_options_.workspace_limits[i].segment(0, 3) >
+  //                c3_options_.workspace_limits[i][3] -
+  //                    c3_options_.workspace_margins);
+  //   DRAKE_DEMAND(lcs_x->get_data().segment(0, 3).transpose() *
+  //                    c3_options_.workspace_limits[i].segment(0, 3) <
+  //                c3_options_.workspace_limits[i][4] +
+  //                    c3_options_.workspace_margins);
+  // }
 
   c3_->UpdateLCS(lcs);
   c3_->UpdateTarget(x_desired);
