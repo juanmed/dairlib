@@ -11,9 +11,9 @@ workspace(name = "dairlib")
 #  export DAIRLIB_LOCAL_DRAKE_PATH=/home/user/workspace/drake
 
 # Choose a revision of Drake to use.
-DRAKE_COMMIT = "v1.22.0"
+DRAKE_COMMIT = "v1.25.0"
 
-DRAKE_CHECKSUM = "78cf62c177c41f8415ade172c1e6eb270db619f07c4b043d5148e1f35be8da09"
+DRAKE_CHECKSUM = "ebebd812c4f3644cf2fefbbf72835060cbd26e8896a0959ad0fcd2f3428a0547"
 # Before changing the COMMIT, temporarily uncomment the next line so that Bazel
 # displays the suggested new value for the CHECKSUM.
 #DRAKE_CHECKSUM = "0" * 64
@@ -36,8 +36,31 @@ load("@inekf_path//:environ.bzl", "DAIRLIB_LOCAL_INEKF_PATH")
     "drake" if DAIRLIB_LOCAL_DRAKE_PATH else "drake_ignored",
 )
 
+print("http_drake_repo_name={}, local_drake_repo_name={}".format(_http_drake_repo_name, _local_drake_repo_name))  # noqa
+
 # Maybe download Drake.
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+
+# http_archive(
+#     name = "rules_cc",
+#     urls = ["https://github.com/bazelbuild/rules_cc/releases/download/0.0.4/rules_cc-0.0.4.tar.gz"],
+#     sha256 = "af6cc82d87db94585bceeda2561cb8a9d55ad435318ccb4ddfee18a43580fb5d",
+#     strip_prefix = "rules_cc-0.0.4",
+# )
+
+http_archive(
+    name = "rules_cc",
+    urls = ["https://github.com/bazelbuild/rules_cc/releases/download/0.0.10-rc1/rules_cc-0.0.10-rc1.tar.gz"],
+    sha256 = "d75a040c32954da0d308d3f2ea2ba735490f49b3a7aa3e4b40259ca4b814f825",
+)
+
+
+load("@rules_cc//cc:repositories.bzl", "rules_cc_dependencies", "rules_cc_toolchains")
+
+rules_cc_dependencies()
+
+rules_cc_toolchains()
 
 http_archive(
     name = _http_drake_repo_name,
@@ -47,6 +70,15 @@ http_archive(
         "https://github.com/RobotLocomotion/drake/archive/{}.tar.gz",
     ]],
 )
+
+http_archive(
+    name = "drake_models",
+    build_file = "//third_party/drake_models:drake_models.BUILD",
+    sha256 = "63280db45043118d43cd7fd5716571a168066d2a30d8c3cf816b94ecaf21f502",
+    strip_prefix = "models-a7f1dedbc7f14f1babe731a768ab7b123dd4f1c9",
+    url = "https://github.com/RobotLocomotion/models/archive/a7f1dedbc7f14f1babe731a768ab7b123dd4f1c9.zip",
+)
+
 
 # Maybe use a local checkout of Drake.
 print("Using DAIRLIB_LOCAL_DRAKE_PATH={}".format(DAIRLIB_LOCAL_DRAKE_PATH)) if DAIRLIB_LOCAL_DRAKE_PATH else None  # noqa
