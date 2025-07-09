@@ -85,6 +85,9 @@ cc_library(
         "//systems/framework:vector",
         "@drake//:drake_shared_library",
     ],
+    data = [
+        "//solvers:params_files",
+    ]
 )
 
 cc_library(

@@ -170,3 +170,8 @@ cc_test(
         "@gtest//:main",
     ],
 )
+
+filegroup(
+    name = "params_files",
+    srcs = glob(["*.yaml"]),
+)
