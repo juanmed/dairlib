@@ -71,10 +71,10 @@ bazel_dep(name = "inekf")
 # this will also work to override inekf 
 
 # You can also use DRAKE_COMMIT to choose a Drake release; e.g.:
-DRAKE_VERSION = "v1.42.0"
-DRAKE_CHECKSUM = "d860c15f50397c8a946fcc79e0a58a91ebc56f2189ef9edfcac929aa04157f8b"
+DRAKE_COMMIT = "v1.42.0"
+DRAKE_CHECKSUM = "15e78356838fe375739329db8b4c633be56f7140ef4cd40ea5a6859eb3f3a80f"
 
-# Before changing the DRAKE_VERSION, temporarily uncomment the next line so that Bazel
+# Before changing the COMMIT, temporarily uncomment the next line so that Bazel
 # displays the suggested new value for the CHECKSUM.
 # DRAKE_CHECKSUM = "0" * 64
 
@@ -82,18 +82,16 @@ DRAKE_CHECKSUM = "d860c15f50397c8a946fcc79e0a58a91ebc56f2189ef9edfcac929aa04157f
 # See README.md for instructions to use a local path, instead.
 archive_override(
     module_name = "drake",
-    urls = [x.format(DRAKE_VERSION) for x in [
-        "https://github.com/RobotLocomotion/drake/archive/{}.tar.gz",
-    ]],
+    urls = ["https://github.com/juanmed/drake/archive/refs/heads/feature/surface_velocity_hydroelastic.zip"],
     sha256 = DRAKE_CHECKSUM,
-    strip_prefix = "drake-{}".format(DRAKE_VERSION.lstrip("v")),
+    strip_prefix = "drake-feature-surface_velocity_hydroelastic",
 )
 
 bazel_dep(name = "c3")
 git_override(
     module_name = "c3",
-    remote = "https://github.com/DAIRLab/c3.git",
-    commit = "ed1cb0ed199901aeae85725502b583a2b40c9553"
+    remote = "https://github.com/juanmed/c3.git",
+    commit = "9c66106709a1447ddfff3fbd008b8d0b40956b34"
 )
 
 INEKF_COMMIT = "297c308e50fa599af92ce3bd5f11d71e2bf8af69"
