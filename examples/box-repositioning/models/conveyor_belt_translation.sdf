@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<sdf version="1.7">
+  <model name="conveyor_gripper">
+    <link name="gripper">
+      <pose>0 0 0 0 0 0</pose>
+      <visual name="gripper_visual">
+        <geometry>
+          <box>
+            <size>0.2 0.05 0.2</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.43 0.3 0.7 0.6</ambient> 
+          <diffuse>0.43 0.3 0.7 0.6</diffuse>
+        </material>
+      </visual>
+      <collision name="gripper_collision">
+        <geometry>
+          <box>
+            <size>0.2 0.05 0.2</size>
+          </box>
+        </geometry>
+        <drake:proximity_properties>
+          <drake:compliant_hydroelastic/>
+          <drake:hydroelastic_modulus>1e6</drake:hydroelastic_modulus>
+          <drake:mesh_resolution_hint>0.01</drake:mesh_resolution_hint>
+          <drake:mu_dynamic>1.4</drake:mu_dynamic>
+          <drake:mu_static>1.5</drake:mu_static>
+          <drake:hunt_crossley_dissipation>5</drake:hunt_crossley_dissipation>
+          <drake:surface_speed>0.5</drake:surface_speed>
+          <drake:surface_velocity_normal>0 1 0</drake:surface_velocity_normal>
+        </drake:proximity_properties>
+      </collision>
+    </link>
+
+    <!-- Links for joints-->
+    <link name="base_link"/>
+    <link name="conveyor_slider_x"/>
+    <link name="conveyor_slider_y"/>
+    <link name="conveyor_hinge_x"/>
+    <link name="conveyor_hinge_y"/>
+
+    <!-- Translation along X -->
+    <joint name="conveyor_prismatic_x" type="prismatic">
+      <parent>base_link</parent>
+      <child>conveyor_slider_x</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <effort>1</effort>
+          <lower>-2</lower>
+          <upper>2</upper>
+        </limit>
+      </axis>
+    </joint>
+
+    <!-- Rotation along X -->
+    <joint name="conveyor_revolute_x" type="revolute">
+      <parent>conveyor_slider_x</parent>
+      <child>conveyor_hinge_x</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <effort>1</effort>
+          <lower>-1.2</lower>
+          <upper>1.2</upper>
+        </limit>
+      </axis>
+    </joint>
+
+    <!-- Translation along Y -->
+    <joint name="conveyor_prismatic_y" type="prismatic">
+      <parent>conveyor_hinge_x</parent>
+      <child>conveyor_slider_y</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <!-- This joint is actuated. -->
+          <effort>1</effort>
+          <lower>-2</lower>
+          <upper>2</upper>
+        </limit>
+      </axis>
+    </joint>
+
+    <!-- Rotation around Y -->
+    <joint name="conveyor_revolute_y" type="revolute">
+      <parent>conveyor_slider_y</parent>
+      <child>conveyor_hinge_y</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <!-- This joint is not actuated. -->
+          <effort>1</effort>
+          <lower>-1.2</lower>
+          <upper>1.2</upper>
+        </limit>
+      </axis>
+    </joint>
+
+    <!-- Translation along Z -->
+    <joint name="conveyor_prismatic_z" type="prismatic">
+      <parent>conveyor_hinge_y</parent>
+      <child>gripper</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <effort>1</effort>
+          <lower>-2</lower>
+          <upper>2</upper>
+        </limit>
+      </axis>
+    </joint>
+
+  </model>
+</sdf>

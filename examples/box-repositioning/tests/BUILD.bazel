@@ -1,0 +1,15 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_test(
+    name = "box_repositioning_config_test",
+    srcs = ["BoxRepositioningConfigTest.cc"],
+    deps = [
+        "//common:find_resource",
+        "//examples/box-repositioning:parameters",
+        "@drake//:drake_shared_library",
+        "@gtest//:main",
+    ],
+    data = [
+        "//examples/box-repositioning:configs",
+    ],
+)

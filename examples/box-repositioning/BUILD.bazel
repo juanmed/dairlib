@@ -1,0 +1,39 @@
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "configs",
+    srcs = glob(["config/*.yaml"]),
+)
+
+cc_library(
+    name = "parameters",
+    hdrs = [
+      "parameters/box_repositioning_config.h",
+    ],
+    deps = [
+      "@drake//:drake_shared_library",
+    ]
+)
+
+cc_binary(
+    name = "run_simulation",
+    srcs = ["box_repositioning_simulation.cc"],
+    data = [
+      ":configs",
+    ],
+    deps = [
+      ":parameters",
+      "//common",
+      "//examples/plate-balancing:parameters",
+      "//examples/plate-balancing/systems:franka_systems",
+      "//systems:robot_lcm_systems",
+      "//systems:system_utils",
+      "//systems/controllers",
+      "//systems/framework:lcm_driven_loop",
+      "//systems/lcmt_systems:lcmt_systems",
+      "//systems/primitives:radio_parser",
+      "@drake//:drake_shared_library",
+      "@gflags",
+    ]
+
+)
