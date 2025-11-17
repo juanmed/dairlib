@@ -2,7 +2,7 @@ package(default_visibility = ["//visibility:public"])
 
 filegroup(
     name = "configs",
-    srcs = glob(["config/*.yaml"]),
+    srcs = glob(["config/**/*.yaml"]),
 )
 
 cc_library(
@@ -20,6 +20,7 @@ cc_binary(
     srcs = ["box_repositioning_simulation.cc"],
     data = [
       ":configs",
+      "@drake_models//:franka_description",
     ],
     deps = [
       ":parameters",
@@ -36,4 +37,29 @@ cc_binary(
       "@gflags",
     ]
 
+)
+
+cc_binary(
+    name = "run_visualizer",
+    srcs = ["box_repositioning_visualizer.cc"],
+    data = [
+        ":configs",
+        "@drake_models//:franka_description",
+    ],
+    deps = [
+        ":parameters",
+        "//common",
+        "//examples/plate-balancing:parameters",
+        "//multibody:utils",
+        "//multibody:visualization_utils",
+        "//systems:robot_lcm_systems",
+        "//systems:system_utils",
+        "//systems/primitives",
+        "//systems/trajectory_optimization:lcm_trajectory_systems",
+        "//systems/lcmt_systems:lcmt_systems",
+        "//examples/plate-balancing/systems/visualization:visualization_systems",
+        "@c3//lcmtypes:lcmt_c3",
+        "@drake//:drake_shared_library",
+        "@gflags",
+    ],
 )

@@ -45,7 +45,7 @@ TEST(BoxRepositioningConfigTest, LoadsExpectedValues) {
   EXPECT_EQ(config.simulation_scene_config_directory,
             "examples/plate-balancing/config/Simulation/scene-config/");
   EXPECT_EQ(config.simulation_config_file,
-            "examples/plate-balancing/config/Simulation/simulation_config.yaml");
+            "examples/box-repositioning/config/simulation_config.yaml");
   EXPECT_EQ(config.osc_contoller_config_file,
             "examples/plate-balancing/config/OSC/controller_config.yaml");
   EXPECT_EQ(config.osc_osqp_setting_file,
