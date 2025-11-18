@@ -13,3 +13,17 @@ cc_test(
         "//examples/box-repositioning:configs",
     ],
 )
+
+cc_test(
+    name = "box_repositioning_c3_controller_options_test",
+    srcs = ["BoxRepositioningC3ControllerOptionsTest.cc"],
+    deps = [
+        "//common:find_resource",
+        "//examples/box-repositioning:parameters",
+        "@drake//:drake_shared_library",
+        "@gtest//:main",
+    ],
+    data = [
+        "//examples/box-repositioning:configs",
+    ],
+)

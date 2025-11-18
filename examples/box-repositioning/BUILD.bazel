@@ -6,9 +6,18 @@ filegroup(
 )
 
 cc_library(
+    name = "models",
+    data = glob([
+        "models/**",
+    ]),
+)
+
+cc_library(
     name = "parameters",
     hdrs = [
       "parameters/box_repositioning_config.h",
+      "parameters/box_repositioning_c3_controller_options.h",
+      "parameters/box_repositioning_target_config.h", 
     ],
     deps = [
       "@drake//:drake_shared_library",
@@ -61,5 +70,46 @@ cc_binary(
         "@c3//lcmtypes:lcmt_c3",
         "@drake//:drake_shared_library",
         "@gflags",
+    ],
+)
+
+cc_binary(
+    name = "run_c3_controller",
+    srcs = ["box_repositioning_c3_controller.cc"],
+    data = [
+        ":configs",
+        ":models",
+        "@drake_models//:franka_description",
+    ],
+    deps = [
+        ":box_repositioning_target_generator",
+        ":parameters",
+        "//common",
+        "//examples/plate-balancing:parameters",
+        "//examples/plate-balancing/systems:franka_systems",
+        "//lcm:lcm_trajectory_saver",
+        "//systems:robot_lcm_systems",
+        "//systems:system_utils",
+        "//systems/controllers",
+        "//systems/controllers/osc:operational_space_control",
+        "//systems/lcmt_systems:lcmt_systems",
+        "//systems/framework:lcm_driven_loop",
+        "//systems/primitives:radio_parser",
+        "@c3//:libc3",
+        "@drake//:drake_shared_library",
+        "@gflags",
+    ],
+)
+
+cc_library(
+    name = "box_repositioning_target_generator",
+    srcs = ["box_repositioning_target_generator.cc"],
+    hdrs = ["box_repositioning_target_generator.h"],
+    deps = [
+        "//lcmtypes:lcmt_robot",
+        "//multibody:utils",
+        "//systems/framework:vector",
+        "@drake//:drake_shared_library",
+        "@lcm",
     ],
 )

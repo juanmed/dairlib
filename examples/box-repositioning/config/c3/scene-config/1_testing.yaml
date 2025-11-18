@@ -1,0 +1,11 @@
+franka_model: package://drake_models/franka_description/urdf/panda_arm.urdf
+end_effector_model: examples/box-repositioning/models/conveyor_belt.sdf
+end_effector_name: gripper
+end_effector_lcs_model: examples/box-repositioning/models/conveyor_belt_translation.sdf
+tool_attachment_frame: [0, 0, 0.25]
+end_effector_thickness: 0.016
+object_models: [examples/box-repositioning/models/box.sdf]
+environment_models: []
+# orientation in RPY then position in XYZ
+environment_orientations: []
+environment_positions: []
