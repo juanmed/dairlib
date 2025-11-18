@@ -230,6 +230,16 @@ int DoMain(std::string plate_balancing_config, bool is_simulation) {
                            plant_for_lcs.GetFrameByName("base_link"), X_WI);
   plant_for_lcs.Finalize();
 
+  std::vector<std::string> x_names = plant_for_lcs.GetStateNames();
+  for (const auto& n : x_names) {
+    std::cout << n << std::endl;
+  }
+  std::cout << "Actuators:" << std::endl;
+  std::vector<std::string> a_names = plant_for_lcs.GetActuatorNames();
+  for (const auto& n : a_names) {
+    std::cout << n << std::endl;
+  }  
+
   // Convert the plant to AutoDiffXd for contact force calculations
   std::unique_ptr<MultibodyPlant<drake::AutoDiffXd>> plant_for_lcs_autodiff =
       drake::systems::System<double>::ToAutoDiffXd(plant_for_lcs);

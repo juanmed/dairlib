@@ -45,10 +45,10 @@ FrankaKinematics::FrankaKinematics(const MultibodyPlant<double>& franka_plant,
               "x_object", StateVector<double>(object_plant.num_positions(),
                                               object_plant.num_velocities()))
           .get_index();
-  num_end_effector_positions_ = 3 + include_end_effector_orientation * 3;
-  num_object_positions_ = 7;
-  num_end_effector_velocities_ = 3 + include_end_effector_orientation * 3;
-  num_object_velocities_ = 6;
+  num_end_effector_positions_ = 5 + include_end_effector_orientation * 3;
+  num_object_positions_ = 4;
+  num_end_effector_velocities_ = 5 + include_end_effector_orientation * 3;
+  num_object_velocities_ = 4;
   lcs_state_port_ =
       this->DeclareVectorOutputPort(
               "x_lcs",
@@ -58,7 +58,7 @@ FrankaKinematics::FrankaKinematics(const MultibodyPlant<double>& franka_plant,
               &FrankaKinematics::ComputeLCSState)
           .get_index();
   lcs_input_port_ =
-      this->DeclareVectorOutputPort("u_lcs", BasicVector<double>(3),
+      this->DeclareVectorOutputPort("u_lcs", BasicVector<double>(6),
                                     &FrankaKinematics::ComputeLCSInput)
           .get_index();
 }
