@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<robot name="box">
-    <link name="box">
+<robot name="cylinder">
+    <link name="cylinder">
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <mass value="0.1"/>

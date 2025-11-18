@@ -170,7 +170,7 @@ int do_main(int argc, char* argv[]) {
       box_state_receiver->get_output_port(0).size(), 0,
       plant.num_positions(box_index));
   auto object_passthrough = builder.AddSystem<SubvectorPassThrough>(
-      box_state_receiver->get_output_port(0).size(), 0,
+      object_state_receiver->get_output_port(0).size(), 0,
       plant.num_positions(object_index));
 
   // Multiplexer to combine all position vectors for visualization.
